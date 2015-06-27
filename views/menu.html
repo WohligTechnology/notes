@@ -1,5 +1,5 @@
-
-    <ul class="list-group">
-        <li ng-repeat="menu in navigation" class=" list-group-item {{menu.classis}}"><a href="{{menu.link}}">{{menu.name}}</a>
-        </li>
-    </ul>
+<ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="menu in navigation" class="{{menu.classis}}">
+        <a href="{{menu.link}}">{{menu.name}}</a>
+    </li>
+</ul>
