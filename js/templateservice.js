@@ -7,6 +7,7 @@ templateservicemod.service('TemplateService', function () {
     this.header = "views/header.html";
     this.menu = "views/menu.html";
     this.content = "views/content.html";
+    this.submenu = "views/submenu.html";
     this.footer = "views/footer.html";
     
     var d=new Date();

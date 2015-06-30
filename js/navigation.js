@@ -1,30 +1,16 @@
+var adminurl = "http://localhost:1337/";
 var navigationservice = angular.module('navigationservice', [])
 
-.factory('NavigationService', function () {
+.factory('NavigationService', function ($http) {
     var navigation = [{
-        name: "Home",
+        name: "Dashboard",
         classis: "active",
         link:"#/home",
         subnav: []
     }, {
-        name: "About",
+        name: "User",
         active: "",
-        link:"#/about",
-        subnav: []
-    }, {
-        name: "Services",
-        classis: "",
-        link:"#/services",
-        subnav: []
-    }, {
-        name: "Portfolio",
-        classis: "",
-        link:"#/portfolio",
-        subnav: []
-    }, {
-        name: "Contact",
-        classis: "",
-        link:"#/contact",
+        link:"#/user",
         subnav: []
     }];
 
@@ -44,6 +30,235 @@ var navigationservice = angular.module('navigationservice', [])
             }
             return menuname;
         },
+        getUser: function(callback){
+            $http.post(adminurl + "user/find").success(callback);
+        },
+        getFolder: function(callback){
+            $http.post(adminurl + "folder/find").success(callback);
+        },
+        getDevice: function(id,callback){
+            $http({
+                url: adminurl + "device/find",
+                method: "POST",
+                data: {
+                    "user": id
+                }
+            }).success(callback);
+        },
+        getFolder: function(id,callback){
+            $http({
+                url: adminurl + "folder/find",
+                method: "POST",
+                data: {
+                    "user": id
+                }
+            }).success(callback);
+        },
+        getFeeds: function(id,callback){
+            $http({
+                url: adminurl + "feed/find",
+                method: "POST",
+                data: {
+                    "user": id
+                }
+            }).success(callback);
+        },
+        getShare: function(id,callback){
+            $http({
+                url: adminurl + "share/find",
+                method: "POST",
+                data: {
+                    "user": id
+                }
+            }).success(callback);
+        },
+        deleteUser: function(callback){
+//            $http.get(adminurl + "user/find?_id="+$.jStorage.get("deleteuser")).success(callback);
+            $http({
+                url: adminurl + "user/delete",
+                method: "POST",
+                data: {
+//                    "id": $.jStorage.get("deleteuser")
+                    "_id": $.jStorage.get("deleteuser")
+                }
+            }).success(callback);
+        },
+        getOneUser: function(id, callback){
+            $http({
+                url: adminurl + "user/findone",
+                method: "POST",
+                data: {
+                    "_id": id
+                }
+            }).success(callback);
+        },
+        saveDevice: function(data, callback){
+            $http({
+                url: adminurl + "device/save",
+                method: "POST",
+                data: {
+                    "user":data.user,
+                    "os":data.os,
+                    "pushid":data.pushid
+                }
+            }).success(callback);
+        },
+        editDevice: function(data, callback){
+            $http({
+                url: adminurl + "device/save",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user,
+                    "os":data.os,
+                    "pushid":data.pushid
+                }
+            }).success(callback);
+        },
+        deleteDevice: function(data, callback){
+            $http({
+                url: adminurl + "device/delete",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user
+                }
+            }).success(callback);
+        },
+        saveFolder: function(data, callback){
+            $http({
+                url: adminurl + "folder/save",
+                method: "POST",
+                data: {
+                    "user":data.user,
+                    "name":data.name
+                }
+            }).success(callback);
+        },
+        editFolder: function(data, callback){
+            $http({
+                url: adminurl + "folder/save",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user,
+                    "name":data.name
+                }
+            }).success(callback);
+        },
+        deleteFolder: function(data, callback){
+            $http({
+                url: adminurl + "folder/delete",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user
+                }
+            }).success(callback);
+        },
+        saveFeeds: function(data, callback){
+            $http({
+                url: adminurl + "feed/save",
+                method: "POST",
+                data: {
+                    "user":data.user,
+                    "title":data.title,
+                    "text":data.text
+                }
+            }).success(callback);
+        },
+        editFeeds: function(data, callback){
+            $http({
+                url: adminurl + "feed/save",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user,
+                    "title":data.title,
+                    "text":data.text
+                }
+            }).success(callback);
+        },
+        deleteFeeds: function(data, callback){
+            $http({
+                url: adminurl + "feed/delete",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user
+                }
+            }).success(callback);
+        },
+        saveShare: function(data, callback){
+            $http({
+                url: adminurl + "share/save",
+                method: "POST",
+                data: {
+                    "user":data.user,
+                    "userfrom":data.userfrom,
+                    "userto":data.userto,
+                    "note":data.note,
+                    "status":data.status
+                }
+            }).success(callback);
+        },
+        editShare: function(data, callback){
+            $http({
+                url: adminurl + "share/save",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user,
+                    "userfrom":data.userfrom,
+                    "userto":data.userto,
+                    "note":data.note,
+                    "status":data.status
+                }
+            }).success(callback);
+        },
+        deleteShare: function(data, callback){
+            $http({
+                url: adminurl + "share/delete",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "user":data.user
+                }
+            }).success(callback);
+        },
+        saveUser: function(data, callback){
+//            $http.get(adminurl + "user/find?_id="+$.jStorage.get("deleteuser")).success(callback);
+            $http({
+                url: adminurl + "user/save",
+                method: "POST",
+                data: {
+                    "username":data.username,
+                    "firstname":data.firstname,
+                    "lastname":data.lastname,
+                    "email":data.email,
+                    "fbid":data.fbid,
+                    "gid":data.gid,
+                    "passcode":data.passcode
+                }
+            }).success(callback);
+        },
+        updateUser: function(data, callback){
+//            $http.get(adminurl + "user/find?_id="+$.jStorage.get("deleteuser")).success(callback);
+            $http({
+                url: adminurl + "user/save",
+                method: "POST",
+                data: {
+                    "_id":data._id,
+                    "username":data.username,
+                    "firstname":data.firstname,
+                    "lastname":data.lastname,
+                    "email":data.email,
+                    "fbid":data.fbid,
+                    "gid":data.gid,
+                    "passcode":data.passcode
+                }
+            }).success(callback);
+        }
         
     }
 });

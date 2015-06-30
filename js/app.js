@@ -13,21 +13,41 @@ firstapp.config(['$routeProvider',
             templateUrl: 'views/template.html',
             controller: 'home'
         }).
-        when('/about', {
+        when('/user', {
             templateUrl: 'views/template.html',
-            controller: 'about'
+            controller: 'user'
         }).
-        when('/services', {
+        when('/edituser/:id', {
             templateUrl: 'views/template.html',
-            controller: 'services'
+            controller: 'edituser'
         }).
-        when('/portfolio', {
+        when('/createuser', {
             templateUrl: 'views/template.html',
-            controller: 'portfolio'
+            controller: 'createuser'
         }).
         when('/contact', {
             templateUrl: 'views/template.html',
             controller: 'contact'
+        }).
+        when('/device/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'device'
+        }).
+        when('/folder/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'folder'
+        }).
+        when('/note/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'note'
+        }).
+        when('/share/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'share'
+        }).
+        when('/feeds/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'feeds'
         }).
         otherwise({
             redirectTo: '/home'
