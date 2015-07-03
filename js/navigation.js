@@ -98,7 +98,7 @@ var navigationservice = angular.module('navigationservice', [])
                 method: "POST",
                 data: {
                     "user":data.user,
-                    "os":data.os,
+                    "OS":data.os,
                     "pushid":data.pushid
                 }
             }).success(callback);
@@ -227,6 +227,7 @@ var navigationservice = angular.module('navigationservice', [])
             }).success(callback);
         },
         saveUser: function(data, callback){
+            console.log(data);
 //            $http.get(adminurl + "user/find?_id="+$.jStorage.get("deleteuser")).success(callback);
             $http({
                 url: adminurl + "user/save",
@@ -236,6 +237,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "firstname":data.firstname,
                     "lastname":data.lastname,
                     "email":data.email,
+                    "password":data.password,
                     "fbid":data.fbid,
                     "gid":data.gid,
                     "passcode":data.passcode
@@ -248,7 +250,7 @@ var navigationservice = angular.module('navigationservice', [])
                 url: adminurl + "user/save",
                 method: "POST",
                 data: {
-                    "_id":data._id,
+                    "_id":data.id,
                     "username":data.username,
                     "firstname":data.firstname,
                     "lastname":data.lastname,

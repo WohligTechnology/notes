@@ -1,12 +1,12 @@
 var phonecatControllers = angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ngDialog']);
 
-phonecatControllers.controller('home', function($scope, TemplateService, NavigationService) {
+phonecatControllers.controller('home', function ($scope, TemplateService, NavigationService) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 });
-phonecatControllers.controller('user', function($scope, TemplateService, NavigationService, ngDialog) {
+phonecatControllers.controller('user', function ($scope, TemplateService, NavigationService, ngDialog, $location) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("User");
     TemplateService.title = $scope.menutitle;
@@ -17,23 +17,40 @@ phonecatControllers.controller('user', function($scope, TemplateService, Navigat
     //DEVELOPMENT
     $scope.user = [];
     $scope.userid = 0;
-//    NavigationService.getUser().success(function(data, status) {
-//        console.log(data);
-//        $scope.user = data;
-//    });
-    NavigationService.getUser(function(data, status) {
-        $scope.user = data;
-    });
+    //    NavigationService.getUser().success(function(data, status) {
+    //        console.log(data);
+    //        $scope.user = data;
+    //    });
 
-    //DELETE USER
-    $scope.confDelete = function(){
-        NavigationService.deleteUser(function(data, status){
+    var reload = function () {
+        console.log("in load");
+        NavigationService.getUser(function (data, status) {
             console.log(data);
+            $scope.user = data;
         });
     }
-    
+
+    reload();
+
+
+    //DELETE USER
+    $scope.confDelete = function () {
+        NavigationService.deleteUser(function (data, status) {
+            console.log(data);
+//            reload();
+            ngDialog.close();
+            window.location.reload();
+            
+        });
+    }
+
+    $scope.getallusers = function () {
+        console.log("in get all users");
+
+    }
+
     //OPENDELETE DIALOG BOX
-    $scope.deletefun = function(id) {
+    $scope.deletefun = function (id) {
         $.jStorage.set("deleteuser", id);
         ngDialog.open({
             template: 'http://localhost/notes/views/delete.html',
@@ -43,7 +60,7 @@ phonecatControllers.controller('user', function($scope, TemplateService, Navigat
         });
     }
 });
-phonecatControllers.controller('edituser', function($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('edituser', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams, $location) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Update User");
     TemplateService.title = $scope.menutitle;
@@ -51,34 +68,36 @@ phonecatControllers.controller('edituser', function($scope, TemplateService, Nav
     TemplateService.content = "views/edituser.html";
     $scope.navigation = NavigationService.getnav();
     $scope.usr = $routeParams.id;
-    
+
     console.log($routeParams.id);
 
     //DEVELOPMENT
     $scope.user = [];
-    
+
     //get one user
-    NavigationService.getOneUser($routeParams.id,function (data, status){
+    NavigationService.getOneUser($routeParams.id, function (data, status) {
         $scope.user = data;
     });
 
     //DELETE USER
-    $scope.confDelete = function(){
-        NavigationService.deleteUser(function(data, status){
+    $scope.confDelete = function () {
+        NavigationService.deleteUser(function (data, status) {
             console.log(data);
         });
     }
-    
-      //save user
-    $scope.submitForm = function(){
+
+    //save user
+    $scope.submitForm = function () {
+        $scope.user.id = $scope.usr;
         console.log($scope.user);
-        NavigationService.saveUser($scope.user,function(data, status){
+        NavigationService.updateUser($scope.user, function (data, status) {
             console.log(data);
+            $location.url("/user");
         });
     }
-    
+
     //OPENDELETE DIALOG BOX
-    $scope.deletefun = function(id) {
+    $scope.deletefun = function (id) {
         $.jStorage.set("deleteuser", id);
         ngDialog.open({
             template: 'http://localhost/notes/views/delete.html',
@@ -88,29 +107,30 @@ phonecatControllers.controller('edituser', function($scope, TemplateService, Nav
         });
     }
 });
-phonecatControllers.controller('createuser', function($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('createuser', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams, $location) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Create User");
     TemplateService.title = $scope.menutitle;
     TemplateService.list = false;
     TemplateService.content = "views/createuser.html";
     $scope.navigation = NavigationService.getnav();
-    
+
     console.log($routeParams.id);
 
     //DEVELOPMENT
     $scope.user = [];
-    
+
     //save user
-    $scope.submitForm = function(){
+    $scope.submitForm = function () {
         console.log($scope.user);
-        NavigationService.saveUser($scope.user,function(data, status){
+        NavigationService.saveUser($scope.user, function (data, status) {
             console.log(data);
+            $location.url("/user");
         });
     }
 
 });
-phonecatControllers.controller('device', function($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('device', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Create User");
     TemplateService.title = $scope.menutitle;
@@ -123,45 +143,46 @@ phonecatControllers.controller('device', function($scope, TemplateService, Navig
     $scope.createdev = [];
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
-    
+
     //GET ALL DEVICE
-    var allDevice = function(){
-    NavigationService.getDevice($routeParams.id, function(data, status){
-        console.log(data);
-        $scope.device = data;
-    });
+    var allDevice = function () {
+        NavigationService.getDevice($routeParams.id, function (data, status) {
+            console.log(data);
+            $scope.device = data;
+        });
     }
-    
+
     allDevice();
-    
+
     //save user
-    $scope.createDevice = function(){
+    $scope.createDevice = function () {
         console.log($scope.user);
-        NavigationService.saveDevice($scope.createdev,function(data, status){
+        NavigationService.saveDevice($scope.createdev, function (data, status) {
+            $scope.createdev = {};
             console.log(data);
             allDevice();
         });
     }
-    
+
     //update device
-    $scope.updateDevice = function(dev){
+    $scope.updateDevice = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.editDevice(dev, function(data, status){
+        NavigationService.editDevice(dev, function (data, status) {
             console.log(data);
         });
     }
-    
+
     //delete device
-    $scope.deleteDevice = function(dev){
+    $scope.deleteDevice = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.deleteDevice(dev, function(data, status){
+        NavigationService.deleteDevice(dev, function (data, status) {
             console.log(data);
             allDevice();
         });
     }
 
 });
-phonecatControllers.controller('folder', function($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('folder', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Create Folder");
     TemplateService.title = $scope.menutitle;
@@ -175,45 +196,45 @@ phonecatControllers.controller('folder', function($scope, TemplateService, Navig
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
     console.log($routeParams.id);
-    
+
     //GET ALL Folder
-    var allFolder = function(){
-    NavigationService.getFolder($routeParams.id, function(data, status){
-        console.log(data);
-        $scope.Folder = data;
-    });
+    var allFolder = function () {
+        NavigationService.getFolder($routeParams.id, function (data, status) {
+            console.log(data);
+            $scope.Folder = data;
+        });
     }
-    
+
     allFolder();
-    
+
     //save user
-    $scope.createFolder = function(){
+    $scope.createFolder = function () {
         console.log($scope.createdev);
-        NavigationService.saveFolder($scope.createdev,function(data, status){
+        NavigationService.saveFolder($scope.createdev, function (data, status) {
             console.log(data);
             allFolder();
         });
     }
-    
+
     //update Folder
-    $scope.updateFolder = function(dev){
+    $scope.updateFolder = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.editFolder(dev, function(data, status){
+        NavigationService.editFolder(dev, function (data, status) {
             console.log(data);
         });
     }
-    
+
     //delete Folder
-    $scope.deleteFolder = function(dev){
+    $scope.deleteFolder = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.deleteFolder(dev, function(data, status){
+        NavigationService.deleteFolder(dev, function (data, status) {
             console.log(data);
             allFolder();
         });
     }
 
 });
-phonecatControllers.controller('feeds', function($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('feeds', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Create Feeds");
     TemplateService.title = $scope.menutitle;
@@ -226,45 +247,45 @@ phonecatControllers.controller('feeds', function($scope, TemplateService, Naviga
     $scope.createdev = [];
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
-    
+
     //GET ALL Feeds
-    var allFeeds = function(){
-    NavigationService.getFeeds($routeParams.id, function(data, status){
-        console.log(data);
-        $scope.Feeds = data;
-    });
+    var allFeeds = function () {
+        NavigationService.getFeeds($routeParams.id, function (data, status) {
+            console.log(data);
+            $scope.Feeds = data;
+        });
     }
-    
+
     allFeeds();
-    
+
     //save user
-    $scope.createFeeds = function(){
+    $scope.createFeeds = function () {
         console.log($scope.user);
-        NavigationService.saveFeeds($scope.createdev,function(data, status){
+        NavigationService.saveFeeds($scope.createdev, function (data, status) {
             console.log(data);
             allFeeds();
         });
     }
-    
+
     //update Feeds
-    $scope.updateFeeds = function(dev){
+    $scope.updateFeeds = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.editFeeds(dev, function(data, status){
+        NavigationService.editFeeds(dev, function (data, status) {
             console.log(data);
         });
     }
-    
+
     //delete Feeds
-    $scope.deleteFeeds = function(dev){
+    $scope.deleteFeeds = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.deleteFeeds(dev, function(data, status){
+        NavigationService.deleteFeeds(dev, function (data, status) {
             console.log(data);
             allFeeds();
         });
     }
 
 });
-phonecatControllers.controller('share', function($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('share', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Create Share");
     TemplateService.title = $scope.menutitle;
@@ -277,50 +298,50 @@ phonecatControllers.controller('share', function($scope, TemplateService, Naviga
     $scope.createdev = [];
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
-    
+
     //user drop down
-    NavigationService.getUser(function(data, status) {
+    NavigationService.getUser(function (data, status) {
         $scope.user = data;
     });
-    
+
     //GET ALL DEVICE
-    var allDevice = function(){
-    NavigationService.getDevice($routeParams.id, function(data, status){
-        console.log(data);
-        $scope.device = data;
-    });
+    var allDevice = function () {
+        NavigationService.getDevice($routeParams.id, function (data, status) {
+            console.log(data);
+            $scope.device = data;
+        });
     }
-    
+
     allDevice();
-    
+
     //save user
-    $scope.createDevice = function(){
+    $scope.createDevice = function () {
         console.log($scope.user);
-        NavigationService.saveDevice($scope.createdev,function(data, status){
+        NavigationService.saveDevice($scope.createdev, function (data, status) {
             console.log(data);
             allDevice();
         });
     }
-    
+
     //update device
-    $scope.updateDevice = function(dev){
+    $scope.updateDevice = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.editDevice(dev, function(data, status){
+        NavigationService.editDevice(dev, function (data, status) {
             console.log(data);
         });
     }
-    
+
     //delete device
-    $scope.deleteDevice = function(dev){
+    $scope.deleteDevice = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.deleteDevice(dev, function(data, status){
+        NavigationService.deleteDevice(dev, function (data, status) {
             console.log(data);
             allDevice();
         });
     }
 
 });
-phonecatControllers.controller('note', function($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('note', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Create Note");
     TemplateService.title = $scope.menutitle;
@@ -333,38 +354,38 @@ phonecatControllers.controller('note', function($scope, TemplateService, Navigat
     $scope.createdev = [];
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
-    
+
     //GET ALL DEVICE
-    var allDevice = function(){
-    NavigationService.getDevice($routeParams.id, function(data, status){
-        console.log(data);
-        $scope.device = data;
-    });
+    var allDevice = function () {
+        NavigationService.getDevice($routeParams.id, function (data, status) {
+            console.log(data);
+            $scope.device = data;
+        });
     }
-    
+
     allDevice();
-    
+
     //save user
-    $scope.createDevice = function(){
+    $scope.createDevice = function () {
         console.log($scope.user);
-        NavigationService.saveDevice($scope.createdev,function(data, status){
+        NavigationService.saveDevice($scope.createdev, function (data, status) {
             console.log(data);
             allDevice();
         });
     }
-    
+
     //update device
-    $scope.updateDevice = function(dev){
+    $scope.updateDevice = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.editDevice(dev, function(data, status){
+        NavigationService.editDevice(dev, function (data, status) {
             console.log(data);
         });
     }
-    
+
     //delete device
-    $scope.deleteDevice = function(dev){
+    $scope.deleteDevice = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.deleteDevice(dev, function(data, status){
+        NavigationService.deleteDevice(dev, function (data, status) {
             console.log(data);
             allDevice();
         });
@@ -372,7 +393,7 @@ phonecatControllers.controller('note', function($scope, TemplateService, Navigat
 
 });
 phonecatControllers.controller('services', ['$scope', 'TemplateService', 'NavigationService',
-    function($scope, TemplateService, NavigationService) {
+    function ($scope, TemplateService, NavigationService) {
         $scope.template = TemplateService;
         $scope.menutitle = NavigationService.makeactive("Services");
         TemplateService.title = $scope.menutitle;
@@ -380,7 +401,7 @@ phonecatControllers.controller('services', ['$scope', 'TemplateService', 'Naviga
     }
 ]);
 phonecatControllers.controller('portfolio', ['$scope', 'TemplateService', 'NavigationService',
-    function($scope, TemplateService, NavigationService) {
+    function ($scope, TemplateService, NavigationService) {
         $scope.template = TemplateService;
         $scope.menutitle = NavigationService.makeactive("Portfolio");
         TemplateService.title = $scope.menutitle;
@@ -388,7 +409,7 @@ phonecatControllers.controller('portfolio', ['$scope', 'TemplateService', 'Navig
     }
 ]);
 phonecatControllers.controller('contact', ['$scope', 'TemplateService', 'NavigationService',
-    function($scope, TemplateService, NavigationService) {
+    function ($scope, TemplateService, NavigationService) {
         $scope.template = TemplateService;
         $scope.menutitle = NavigationService.makeactive("Contact");
         TemplateService.title = $scope.menutitle;
@@ -398,7 +419,7 @@ phonecatControllers.controller('contact', ['$scope', 'TemplateService', 'Navigat
 
 
 phonecatControllers.controller('headerctrl', ['$scope', 'TemplateService',
-    function($scope, TemplateService) {
+    function ($scope, TemplateService) {
         $scope.template = TemplateService;
     }
 ]);
