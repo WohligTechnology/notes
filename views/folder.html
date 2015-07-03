@@ -16,11 +16,11 @@
                     <form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">PushID</label>
+                            <label for="exampleInputEmail1">Folder Name</label>
                             <input type="text" class="form-control" ng-model="createdev.name" placeholder="Name Of Folder" required>
                         </div>
 
-                        <div class="text-center" style="padding-bottom:20px;" ng-click="createFolder()">
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createFolder(createdev)">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 
@@ -32,8 +32,6 @@
 
             <section class="panel panel-default" style="border-radius:0px;">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>User Folder</strong>
-                    <strong class="float_left" ng-click="createFolder()">Creat Folder</strong>
-
                 </div>
 
                 <div class="panel-body" ng-repeat="dev in Folder">
@@ -42,7 +40,7 @@
                     <form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">PushID</label>
+                            <label for="exampleInputEmail1">Folder Name</label>
                             <input type="text" class="form-control" ng-model="dev.name" placeholder="Name Of Folder" required>
                         </div>
 

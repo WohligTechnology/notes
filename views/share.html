@@ -17,29 +17,36 @@
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">To User</label>
-                            <select ng-model="createdev.userto">
+                            <select ng-model="createdev.userto" class="form-control">
                                 <option value="{{usr._id}}" ng-repeat="usr in user">{{usr.username}}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">PushID</label>
-                            <input type="text" class="form-control" ng-model="createdev.pushid" placeholder="Push ID" required>
+                            <label for="exampleInputEmail1">Note</label>
+                            <select ng-model="createdev.note" class="form-control">
+                                <option value="{{note._id}}" ng-repeat="note in note">{{note.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select ng-model="createdev.status" class="form-control">
+                                <option value="pending">Pending</option>
+                                <option value="sent">Sent</option>
+                            </select>
                         </div>
 
-                        <div class="text-center" style="padding-bottom:20px;" ng-click="createshare()">
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createShare(createdev)">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 
                     </form>
                 </div>
 
-                
+
             </section>
 
             <section class="panel panel-default" style="border-radius:0px;">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>User share</strong>
-                    <strong class="float_left" ng-click="createshare()">Creat share</strong>
-
                 </div>
 
                 <div class="panel-body" ng-repeat="dev in share">
@@ -48,14 +55,22 @@
                     <form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">OS</label>
-                            <input type="text" class="form-control" ng-model="dev.os" placeholder="OS" required>
+                            <label for="exampleInputEmail1">To User</label>
+                            <select class="form-control" ng-model="dev.userto" ng-options="usr._id as usr.username for usr in user">
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">PushID</label>
-                            <input type="text" class="form-control" ng-model="dev.pushid" placeholder="Push ID" required>
+                            <label for="exampleInputEmail1">Note</label>
+                            <select class="form-control" ng-model="dev.note" ng-options="usr._id as usr.name for usr in note">
+                            </select>
                         </div>
-
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select ng-model="dev.status" class="form-control">
+                                <option value="pending">Pending</option>
+                                <option value="sent">Sent</option>
+                            </select>
+                        </div>
                         <div class="text-center" style="padding-bottom:20px;">
                             <button type="submit" class="btn btn-primary" ng-click="updateshare(dev)">Update</button>
                             <button type="submit" class="btn btn-primary" ng-click="deleteshare(dev)">Delete</button>
@@ -65,7 +80,7 @@
                 </div>
                 <div class="panel-body" ng-if="share==''">
                     <div class="text-center" style="padding-bottom:20px;">
-                     No share...
+                        No share...
                     </div>
                 </div>
             </section>

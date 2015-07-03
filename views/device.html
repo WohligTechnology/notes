@@ -13,18 +13,18 @@
                 <div class="panel-body">
 
                     <!--                    {{user}}-->
-                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+                    <form name="form_constraints" class="form-validation"  data-ng-submit="submitForm()">
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">OS</label>
-                            <input type="text" class="form-control" ng-model="createdev.OS" placeholder="OS" required>
+                            <input type="text" class="form-control" ng-model="createdev.os" placeholder="OS" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">PushID</label>
                             <input type="text" class="form-control" ng-model="createdev.pushid" placeholder="Push ID" required>
                         </div>
 
-                        <div class="text-center" style="padding-bottom:20px;" ng-click="createDevice()">
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createDevice(createdev)">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 

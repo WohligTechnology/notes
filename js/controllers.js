@@ -37,10 +37,10 @@ phonecatControllers.controller('user', function ($scope, TemplateService, Naviga
     $scope.confDelete = function () {
         NavigationService.deleteUser(function (data, status) {
             console.log(data);
-//            reload();
+            //            reload();
             ngDialog.close();
             window.location.reload();
-            
+
         });
     }
 
@@ -114,6 +114,20 @@ phonecatControllers.controller('createuser', function ($scope, TemplateService, 
     TemplateService.list = false;
     TemplateService.content = "views/createuser.html";
     $scope.navigation = NavigationService.getnav();
+    $scope.isValidEmail = 1;
+
+    $scope.email = function (myemail) {
+        NavigationService.getOneemail(myemail, function (data, status) {
+            console.log(data);
+            if (data.value == true) {
+                console.log("if");
+                $scope.isValidEmail = 0;
+            } else {
+                console.log("else");
+                $scope.isValidEmail = 1;
+            }
+        });
+    }
 
     console.log($routeParams.id);
 
@@ -123,10 +137,15 @@ phonecatControllers.controller('createuser', function ($scope, TemplateService, 
     //save user
     $scope.submitForm = function () {
         console.log($scope.user);
-        NavigationService.saveUser($scope.user, function (data, status) {
-            console.log(data);
-            $location.url("/user");
-        });
+        if ($scope.isValidEmail == 1) {
+            NavigationService.saveUser($scope.user, function (data, status) {
+                console.log(data);
+                $location.url("/user");
+            });
+        }
+        else{
+            console.log("kgfhsdv");
+        }
     }
 
 });
@@ -154,10 +173,11 @@ phonecatControllers.controller('device', function ($scope, TemplateService, Navi
 
     allDevice();
 
-    //save user
-    $scope.createDevice = function () {
-        console.log($scope.user);
-        NavigationService.saveDevice($scope.createdev, function (data, status) {
+    //save device
+    $scope.createDevice = function (createdev) {
+        console.log($scope.createdev);
+        createdev.user = $routeParams.id;
+        NavigationService.saveDevice(createdev, function (data, status) {
             $scope.createdev = {};
             console.log(data);
             allDevice();
@@ -208,10 +228,12 @@ phonecatControllers.controller('folder', function ($scope, TemplateService, Navi
     allFolder();
 
     //save user
-    $scope.createFolder = function () {
+    $scope.createFolder = function (createdev) {
         console.log($scope.createdev);
-        NavigationService.saveFolder($scope.createdev, function (data, status) {
+        createdev.user = $routeParams.id;
+        NavigationService.saveFolder(createdev, function (data, status) {
             console.log(data);
+            $scope.createdev = [];
             allFolder();
         });
     }
@@ -259,10 +281,12 @@ phonecatControllers.controller('feeds', function ($scope, TemplateService, Navig
     allFeeds();
 
     //save user
-    $scope.createFeeds = function () {
+    $scope.createFeeds = function (createdev) {
         console.log($scope.user);
+        createdev.user = $routeParams.id;
         NavigationService.saveFeeds($scope.createdev, function (data, status) {
             console.log(data);
+            $scope.createdev = [];
             allFeeds();
         });
     }
@@ -296,47 +320,62 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
     //DEVELOPMENT
     $scope.device = [];
     $scope.createdev = [];
-    $scope.usr = $routeParams.id;
+    //    $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
 
     //user drop down
     NavigationService.getUser(function (data, status) {
+        console.log("hey user user");
+        console.log(data);
         $scope.user = data;
+        $scope.user.unshift({
+            _id: "1",
+            username: "select"
+        });
+    });
+    NavigationService.getNote($routeParams.id, function (data, status) {
+        $scope.note = data;
+        $scope.note.unshift({
+            _id: "1",
+            name: "select"
+        });
     });
 
     //GET ALL DEVICE
-    var allDevice = function () {
-        NavigationService.getDevice($routeParams.id, function (data, status) {
+    var allShare = function () {
+        NavigationService.getShare($routeParams.id, function (data, status) {
             console.log(data);
-            $scope.device = data;
+            $scope.share = data;
         });
     }
 
-    allDevice();
+    allShare();
 
     //save user
-    $scope.createDevice = function () {
+    $scope.createShare = function (createdev) {
         console.log($scope.user);
-        NavigationService.saveDevice($scope.createdev, function (data, status) {
+        createdev.user = $routeParams.id;
+        NavigationService.saveShare(createdev, function (data, status) {
             console.log(data);
-            allDevice();
+            $scope.createdev = [];
+            allShare();
         });
     }
 
     //update device
-    $scope.updateDevice = function (dev) {
+    $scope.updateshare = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.editDevice(dev, function (data, status) {
+        NavigationService.editShare(dev, function (data, status) {
             console.log(data);
         });
     }
 
     //delete device
-    $scope.deleteDevice = function (dev) {
+    $scope.deleteshare = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.deleteDevice(dev, function (data, status) {
+        NavigationService.deleteShare(dev, function (data, status) {
             console.log(data);
-            allDevice();
+            allShare();
         });
     }
 
@@ -356,67 +395,42 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.createdev.user = $routeParams.id;
 
     //GET ALL DEVICE
-    var allDevice = function () {
-        NavigationService.getDevice($routeParams.id, function (data, status) {
+    var allNote = function () {
+        NavigationService.getNote($routeParams.id, function (data, status) {
             console.log(data);
-            $scope.device = data;
+            $scope.note = data;
         });
     }
 
-    allDevice();
+    allNote();
 
     //save user
-    $scope.createDevice = function () {
+    $scope.createnote = function (createdev) {
         console.log($scope.user);
-        NavigationService.saveDevice($scope.createdev, function (data, status) {
+        createdev.user = $routeParams.id;
+        NavigationService.saveNote($scope.createdev, function (data, status) {
             console.log(data);
-            allDevice();
+            allNote();
         });
     }
 
     //update device
-    $scope.updateDevice = function (dev) {
+    $scope.updateNote = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.editDevice(dev, function (data, status) {
+        NavigationService.editNote(dev, function (data, status) {
             console.log(data);
         });
     }
 
     //delete device
-    $scope.deleteDevice = function (dev) {
+    $scope.deleteNote = function (dev) {
         dev.user = $routeParams.id;
-        NavigationService.deleteDevice(dev, function (data, status) {
+        NavigationService.deleteNote(dev, function (data, status) {
             console.log(data);
-            allDevice();
+            allNote();
         });
     }
-
 });
-phonecatControllers.controller('services', ['$scope', 'TemplateService', 'NavigationService',
-    function ($scope, TemplateService, NavigationService) {
-        $scope.template = TemplateService;
-        $scope.menutitle = NavigationService.makeactive("Services");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    }
-]);
-phonecatControllers.controller('portfolio', ['$scope', 'TemplateService', 'NavigationService',
-    function ($scope, TemplateService, NavigationService) {
-        $scope.template = TemplateService;
-        $scope.menutitle = NavigationService.makeactive("Portfolio");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    }
-]);
-phonecatControllers.controller('contact', ['$scope', 'TemplateService', 'NavigationService',
-    function ($scope, TemplateService, NavigationService) {
-        $scope.template = TemplateService;
-        $scope.menutitle = NavigationService.makeactive("Contact");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    }
-]);
-
 
 phonecatControllers.controller('headerctrl', ['$scope', 'TemplateService',
     function ($scope, TemplateService) {

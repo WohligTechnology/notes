@@ -6,25 +6,15 @@
         <div class="col-md-12">
             <section class="panel panel-default" style="border-radius:0px;">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>Create note</strong>
-
-
                 </div>
 
                 <div class="panel-body">
 
                     <!--                    {{user}}-->
                     <form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">OS</label>
-                            <input type="text" class="form-control" ng-model="createdev.os" placeholder="OS" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">PushID</label>
-                            <input type="text" class="form-control" ng-model="createdev.pushid" placeholder="Push ID" required>
-                        </div>
-
-                        <div class="text-center" style="padding-bottom:20px;" ng-click="createnote()">
+                        
+                       
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createnote(createdev)">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 
@@ -45,14 +35,7 @@
                     <!--                    {{user}}-->
                     <form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
 
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">OS</label>
-                            <input type="text" class="form-control" ng-model="dev.os" placeholder="OS" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">PushID</label>
-                            <input type="text" class="form-control" ng-model="dev.pushid" placeholder="Push ID" required>
-                        </div>
+                        
 
                         <div class="text-center" style="padding-bottom:20px;">
                             <button type="submit" class="btn btn-primary" ng-click="updatenote(dev)">Update</button>
