@@ -473,14 +473,12 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.addcreateNoteElem = function (crdv) {
         if (!crdv.noteelements) {
             crdv.noteelements = [{
-                "note": "",
                 "type": "",
                 "details": "",
                 "order": ""
         }];
         } else {
             crdv.noteelements.push({
-                "note": "",
                 "type": "",
                 "details": "",
                 "order": ""
@@ -496,14 +494,12 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.addupdateNoteElem = function (dev) {
         if (!dev.note.noteelements) {
             dev.note.noteelements = [{
-                "note": "",
                 "type": "",
                 "details": "",
                 "order": ""
         }];
         } else {
             dev.note.noteelements.push({
-                "note": "",
                 "type": "",
                 "details": "",
                 "order": ""

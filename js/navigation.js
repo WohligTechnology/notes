@@ -147,7 +147,7 @@ var navigationservice = angular.module('navigationservice', [])
                 method: "POST",
                 data: {
                     "user": data.user,
-                    "name": data.folder.name
+                    "name": data.name
                 }
             }).success(callback);
         },
@@ -250,7 +250,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "user": data.user,
                     "title": data.title,
                     "tags": data.tags,
-                    "noteelements":data.note.noteelements,
+                    "noteelements":data.noteelements,
                     "color": data.color,
                     "folder": data.folder,
                     "remindertime": data.remindertime,

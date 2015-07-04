@@ -65,7 +65,6 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <td>Note</td>
                                             <td>Type</td>
                                             <td>Details</td>
                                             <td>Order</td>
@@ -74,10 +73,6 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="noteElem in createdev.noteelements">
-                                            <td>
-                                                <select class="form-control" ng-model="noteElem.note" ng-options="n.note._id as n.note.name for n in note">
-                                                </select>
-                                            </td>
                                             <td>
                                                 <select ng-model="noteElem.type" class="form-control">
                                                     <option value="text">Text</option>
@@ -167,7 +162,6 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <td>Note</td>
                                             <td>Type</td>
                                             <td>Details</td>
                                             <td>Order</td>
@@ -176,10 +170,6 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="noteElem in dev.note.noteelements">
-                                            <td>
-                                                <select class="form-control" ng-model="noteElem.note" ng-options="n.note._id as n.note.name for n in note">
-                                                </select>
-                                            </td>
                                             <td>
                                                 <select ng-model="noteElem.type" class="form-control">
                                                     <option value="text">Text</option>
