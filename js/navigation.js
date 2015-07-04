@@ -258,18 +258,19 @@ var navigationservice = angular.module('navigationservice', [])
             }).success(callback);
         },
         editNote: function (data, callback) {
+
             $http({
                 url: adminurl + "note/save",
                 method: "POST",
                 data: {
-                    "_id": data._id,
                     "user": data.user,
-                    "title": data.title,
-                    "tags": data.tags,
-                    "color": data.color,
-                    "folder": data.folder,
-                    "remindertime": data.remindertime,
-                    "timebomb": data.timebomb
+                    "_id": data.note._id,
+                    "title": data.note.title,
+                    "tags": data.note.tags,
+                    "color": data.note.color,
+                    "folder": data.note.folder,
+                    "remindertime": data.note.remindertime,
+                    "timebomb": data.note.timebomb
                 }
             }).success(callback);
         },

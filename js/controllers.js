@@ -334,10 +334,6 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
     });
     NavigationService.getNote($routeParams.id, function (data, status) {
         $scope.note = data;
-        $scope.note.unshift({
-            _id: "1",
-            name: "select"
-        });
     });
 
     //GET ALL DEVICE
@@ -364,6 +360,7 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
     //update device
     $scope.updateshare = function (dev) {
         dev.user = $routeParams.id;
+        //        console.log(data);
         NavigationService.editShare(dev, function (data, status) {
             console.log(data);
         });
@@ -397,22 +394,42 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.tagupdateData = [];
     $scope.tagcreateData = [];
 
-    $scope.addcreateTag = function () {
-        $scope.tagcreateData.push({tagcreateDa:""});
-        console.log($scope.tagcreateData);
-        $scope.tagcreateData.push({"value":""});
-        console.log($scope.tagcreateData);
-        
+    $scope.addcreateTag = function (crdv) {
+        console.log(crdv.tags)
+        if (!crdv.tags) {
+            console.log("in empty tag");
+            crdv.tags = [{
+                "value": ""
+        }];
+        } else {
+            console.log("in non tag");
+            crdv.tags.push({
+                "value": ""
+            });
+        }
+        console.log(crdv);
+
     };
-    $scope.removecreateTag = function (i) {
-        $scope.tagcreateData.splice(i, 1);
+    $scope.removecreateTag = function (i, dev) {
+        dev.splice(i, 1);
     };
     //
 
     //update tag
     $scope.addupdateTag = function (dev) {
-        dev.note.tags.push("");
-        console.log(dev.note.tags);
+        //        dev.note.tags.push({"value":""});
+        //        console.log(dev.note.tags);
+        if (!dev.note.tags) {
+            console.log("in empty tag");
+            dev.note.tags = [{
+                "value": ""
+        }];
+        } else {
+            console.log("in non tag");
+            dev.note.tags.push({
+                "value": ""
+            });
+        }
     };
     $scope.removeupdateTag = function (i, dev) {
         console.log(dev.note);
@@ -429,13 +446,13 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
         NavigationService.getNote($routeParams.id, function (data, status) {
             $scope.Note = data;
             console.log(data);
-//            _.each(data, function (m) {
-//                _.each(m.tags, function (n) {
-//                    $scope.tagupdateData.push({
-//                        tagupdateDa: n
-//                    });
-//                });
-//            });
+            //            _.each(data, function (m) {
+            //                _.each(m.tags, function (n) {
+            //                    $scope.tagupdateData.push({
+            //                        tagupdateDa: n
+            //                    });
+            //                });
+            //            });
         });
     }
 
@@ -444,10 +461,6 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     //save user
     $scope.createnote = function (createdev) {
         createdev.user = $routeParams.id;
-        createdev.tags = [];
-        _.each($scope.tagcreateData, function (n) {
-            createdev.tags.push(n.tagcreateDa);
-        });
         NavigationService.saveNote($scope.createdev, function (data, status) {
             console.log(data);
             $scope.createdev = [];
@@ -459,10 +472,7 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     //update device
     $scope.updatenote = function (dev) {
         dev.user = $routeParams.id;
-        dev.tags = [];
-        _.each($scope.tagupdateData, function (n) {
-            dev.tags.push(n.tagupdateDa);
-        });
+        console.log(dev);
         NavigationService.editNote(dev, function (data, status) {
             console.log(data);
         });
