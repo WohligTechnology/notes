@@ -391,24 +391,17 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.createdev.user = $routeParams.id;
 
     //create tag
-    $scope.tagupdateData = [];
-    $scope.tagcreateData = [];
-
     $scope.addcreateTag = function (crdv) {
         console.log(crdv.tags)
         if (!crdv.tags) {
-            console.log("in empty tag");
             crdv.tags = [{
                 "value": ""
         }];
         } else {
-            console.log("in non tag");
             crdv.tags.push({
                 "value": ""
             });
         }
-        console.log(crdv);
-
     };
     $scope.removecreateTag = function (i, dev) {
         dev.splice(i, 1);
@@ -417,22 +410,17 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
 
     //update tag
     $scope.addupdateTag = function (dev) {
-        //        dev.note.tags.push({"value":""});
-        //        console.log(dev.note.tags);
         if (!dev.note.tags) {
-            console.log("in empty tag");
             dev.note.tags = [{
                 "value": ""
         }];
         } else {
-            console.log("in non tag");
             dev.note.tags.push({
                 "value": ""
             });
         }
     };
     $scope.removeupdateTag = function (i, dev) {
-        console.log(dev.note);
         dev.note.tags.splice(i, 1);
     };
 
@@ -446,13 +434,6 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
         NavigationService.getNote($routeParams.id, function (data, status) {
             $scope.Note = data;
             console.log(data);
-            //            _.each(data, function (m) {
-            //                _.each(m.tags, function (n) {
-            //                    $scope.tagupdateData.push({
-            //                        tagupdateDa: n
-            //                    });
-            //                });
-            //            });
         });
     }
 
@@ -486,6 +467,52 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
             allNote();
         });
     }
+
+
+    //create noteelements
+    $scope.addcreateNoteElem = function (crdv) {
+        if (!crdv.noteelements) {
+            crdv.noteelements = [{
+                "note": "",
+                "type": "",
+                "details": "",
+                "order": ""
+        }];
+        } else {
+            crdv.noteelements.push({
+                "note": "",
+                "type": "",
+                "details": "",
+                "order": ""
+            });
+        }
+    };
+    $scope.removecreateNoteElem = function (i, dev) {
+        dev.splice(i, 1);
+    };
+    //
+
+    //update noteelements
+    $scope.addupdateNoteElem = function (dev) {
+        if (!dev.note.noteelements) {
+            dev.note.noteelements = [{
+                "note": "",
+                "type": "",
+                "details": "",
+                "order": ""
+        }];
+        } else {
+            dev.note.noteelements.push({
+                "note": "",
+                "type": "",
+                "details": "",
+                "order": ""
+            });
+        }
+    };
+    $scope.removeupdateNoteElem = function (i, dev) {
+        dev.note.tags.splice(i, 1);
+    };
 });
 
 phonecatControllers.controller('headerctrl', ['$scope', 'TemplateService',

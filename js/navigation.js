@@ -147,7 +147,7 @@ var navigationservice = angular.module('navigationservice', [])
                 method: "POST",
                 data: {
                     "user": data.user,
-                    "name": data.name
+                    "name": data.folder.name
                 }
             }).success(callback);
         },
@@ -156,9 +156,9 @@ var navigationservice = angular.module('navigationservice', [])
                 url: adminurl + "folder/save",
                 method: "POST",
                 data: {
-                    "_id": data._id,
                     "user": data.user,
-                    "name": data.name
+                    "_id": data.folder._id,
+                    "name": data.folder.name
                 }
             }).success(callback);
         },
@@ -167,7 +167,7 @@ var navigationservice = angular.module('navigationservice', [])
                 url: adminurl + "folder/delete",
                 method: "POST",
                 data: {
-                    "_id": data._id,
+                    "_id": data.folder._id,
                     "user": data.user
                 }
             }).success(callback);
@@ -250,6 +250,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "user": data.user,
                     "title": data.title,
                     "tags": data.tags,
+                    "noteelements":data.note.noteelements,
                     "color": data.color,
                     "folder": data.folder,
                     "remindertime": data.remindertime,
@@ -267,6 +268,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "_id": data.note._id,
                     "title": data.note.title,
                     "tags": data.note.tags,
+                    "noteelements":data.note.noteelements,
                     "color": data.note.color,
                     "folder": data.note.folder,
                     "remindertime": data.note.remindertime,
@@ -279,7 +281,7 @@ var navigationservice = angular.module('navigationservice', [])
                 url: adminurl + "note/delete",
                 method: "POST",
                 data: {
-                    "_id": data._id,
+                    "_id": data.note._id,
                     "user": data.user
                 }
             }).success(callback);
