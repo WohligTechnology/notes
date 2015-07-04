@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <section class="panel panel-default" style="border-radius:0px;">
-                <div class="panel-heading panel-hdr"><strong><span class="glyphicon glyphicon-th mr5"></span>Create note</strong>
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>Create note</strong>
                 </div>
 
                 <div class="panel-body">
@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label>Tags</label>
                             <div class="panel-body">
-                                <a ng-click="addcreateTag();" class="btn btn-success">Add Tag</a>
+                                <a ng-click="addcreateTag(createdev);" class="btn btn-success">Add Tag</a>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -46,12 +46,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="tag in tagcreateData">
+                                        <tr ng-repeat="tag in createdev.tags">
                                             <td>
-                                                <input type="text" ng-model="tag.tagcreateDa" class="form-control">
+                                                <input type="text" ng-model="tag.value" class="form-control">
                                             </td>
                                             <td>
-                                                <input class="bt btn-danger" type="button" ng-click="removecreateTag(tagcreateData.indexOf(tag));" value="Delete">
+                                                <input class="bt btn-danger" type="button" ng-click="removecreateTag(createdev.tags.indexOf(tag),createdev.tags);" value="Delete">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -59,14 +59,14 @@
                             </div>
                         </div>
                         <div class="text-center" style="padding-bottom:20px;" ng-click="createnote(createdev)">
-                            <button type="submit" class="btn btn-primary all-btn">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
             </section>
 
             <section class="panel panel-default" style="border-radius:0px;">
-                <div class="panel-heading panel-hdr"><strong><span class="glyphicon glyphicon-th mr5"></span>User note</strong>
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>User note</strong>
 
                 </div>
 
@@ -109,7 +109,7 @@
                                     <tbody>
                                         <tr ng-repeat="tag in dev.note.tags">
                                             <td>
-                                                <input type="text" ng-model="tag" class="form-control">
+                                                <input type="text" ng-model="tag.value" class="form-control">
                                             </td>
                                             <td>
                                                 <input class="bt btn-danger" type="button" ng-click="removeupdateTag(dev.note.tags.indexOf(tag), dev);" value="Delete">
@@ -121,8 +121,8 @@
                         </div>
 
                         <div class="text-center" style="padding-bottom:20px;">
-                            <button type="submit" class="btn btn-primary all-btn" ng-click="updatenote(dev)">Update</button>
-                            <button type="submit" class="btn btn-primary all-btn" ng-click="deletenote(dev)">Delete</button>
+                            <button type="submit" class="btn btn-primary" ng-click="updatenote(dev)">Update</button>
+                            <button type="submit" class="btn btn-primary" ng-click="deletenote(dev)">Delete</button>
                         </div>
                     </form>
                 </div>
