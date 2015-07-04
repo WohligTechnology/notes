@@ -242,6 +242,47 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback);
         },
+        saveNote: function (data, callback) {
+            $http({
+                url: adminurl + "note/save",
+                method: "POST",
+                data: {
+                    "user": data.user,
+                    "title": data.title,
+                    "tags": data.tags,
+                    "color": data.color,
+                    "folder": data.folder,
+                    "remindertime": data.remindertime,
+                    "timebomb": data.timebomb
+                }
+            }).success(callback);
+        },
+        editNote: function (data, callback) {
+            $http({
+                url: adminurl + "note/save",
+                method: "POST",
+                data: {
+                    "_id": data._id,
+                    "user": data.user,
+                    "title": data.title,
+                    "tags": data.tags,
+                    "color": data.color,
+                    "folder": data.folder,
+                    "remindertime": data.remindertime,
+                    "timebomb": data.timebomb
+                }
+            }).success(callback);
+        },
+        deleteNote: function (data, callback) {
+            $http({
+                url: adminurl + "note/delete",
+                method: "POST",
+                data: {
+                    "_id": data._id,
+                    "user": data.user
+                }
+            }).success(callback);
+        },
         saveUser: function (data, callback) {
             console.log(data);
             //            $http.get(adminurl + "user/find?_id="+$.jStorage.get("deleteuser")).success(callback);

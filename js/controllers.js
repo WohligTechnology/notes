@@ -142,8 +142,7 @@ phonecatControllers.controller('createuser', function ($scope, TemplateService, 
                 console.log(data);
                 $location.url("/user");
             });
-        }
-        else{
+        } else {
             console.log("kgfhsdv");
         }
     }
@@ -222,6 +221,7 @@ phonecatControllers.controller('folder', function ($scope, TemplateService, Navi
         NavigationService.getFolder($routeParams.id, function (data, status) {
             console.log(data);
             $scope.Folder = data;
+            console.log($scope.Folder);
         });
     }
 
@@ -318,6 +318,7 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
     $scope.navigation = NavigationService.getnav();
 
     //DEVELOPMENT
+    $scope.usr = $routeParams.id;
     $scope.device = [];
     $scope.createdev = [];
     //    $scope.usr = $routeParams.id;
@@ -325,8 +326,6 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
 
     //user drop down
     NavigationService.getUser(function (data, status) {
-        console.log("hey user user");
-        console.log(data);
         $scope.user = data;
         $scope.user.unshift({
             _id: "1",
@@ -394,11 +393,49 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
 
+    //create tag
+    $scope.tagupdateData = [];
+    $scope.tagcreateData = [];
+
+    $scope.addcreateTag = function () {
+        $scope.tagcreateData.push({tagcreateDa:""});
+        console.log($scope.tagcreateData);
+        $scope.tagcreateData.push({"value":""});
+        console.log($scope.tagcreateData);
+        
+    };
+    $scope.removecreateTag = function (i) {
+        $scope.tagcreateData.splice(i, 1);
+    };
+    //
+
+    //update tag
+    $scope.addupdateTag = function (dev) {
+        dev.note.tags.push("");
+        console.log(dev.note.tags);
+    };
+    $scope.removeupdateTag = function (i, dev) {
+        console.log(dev.note);
+        dev.note.tags.splice(i, 1);
+    };
+
     //GET ALL DEVICE
+    NavigationService.getFolder($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.folder = data;
+    });
+
     var allNote = function () {
         NavigationService.getNote($routeParams.id, function (data, status) {
+            $scope.Note = data;
             console.log(data);
-            $scope.note = data;
+//            _.each(data, function (m) {
+//                _.each(m.tags, function (n) {
+//                    $scope.tagupdateData.push({
+//                        tagupdateDa: n
+//                    });
+//                });
+//            });
         });
     }
 
@@ -406,24 +443,33 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
 
     //save user
     $scope.createnote = function (createdev) {
-        console.log($scope.user);
         createdev.user = $routeParams.id;
+        createdev.tags = [];
+        _.each($scope.tagcreateData, function (n) {
+            createdev.tags.push(n.tagcreateDa);
+        });
         NavigationService.saveNote($scope.createdev, function (data, status) {
             console.log(data);
+            $scope.createdev = [];
+            $scope.tagcreateData = [];
             allNote();
         });
     }
 
     //update device
-    $scope.updateNote = function (dev) {
+    $scope.updatenote = function (dev) {
         dev.user = $routeParams.id;
+        dev.tags = [];
+        _.each($scope.tagupdateData, function (n) {
+            dev.tags.push(n.tagupdateDa);
+        });
         NavigationService.editNote(dev, function (data, status) {
             console.log(data);
         });
     }
 
     //delete device
-    $scope.deleteNote = function (dev) {
+    $scope.deletenote = function (dev) {
         dev.user = $routeParams.id;
         NavigationService.deleteNote(dev, function (data, status) {
             console.log(data);
