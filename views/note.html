@@ -11,7 +11,7 @@
                 <div class="panel-body">
 
                     <!--                    {{user}}-->
-                    <form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Title</label>
@@ -109,7 +109,7 @@
                 <div class="panel-body" ng-repeat="dev in Note">
                     <h3>New Note</h3>
                     <!--                    {{user}}-->
-                    <form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
+                    <form name="form_constraints" class="form-validation"  data-ng-submit="submitForm()">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Title</label>
                             <input type="text" class="form-control" ng-model="dev.note.title" placeholder="Title" required>
