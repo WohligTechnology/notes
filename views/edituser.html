@@ -33,6 +33,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Password</label>
+                            <input type="password" class="form-control" ng-model="user.password" placeholder="Enter Password" required>
+                        </div>
+
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Facebook ID</label>
                             <input type="text" class="form-control" ng-model="user.fbid" placeholder="Facebook ID">
                         </div>
@@ -48,13 +53,12 @@
                         </div>
 
 
-                    <div class="text-center" style="padding-bottom:20px;" ng-click="updateUser()">
-                        <button type="submit" class="btn btn-primary all-btn">Update</button>
-                    </div>
-                    
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="updateUser()">
+                            <button type="submit" class="btn btn-primary all-btn">Update</button>
+                        </div>
+
                     </form>
             </section>
             </div>
         </div>
     </div>
-   

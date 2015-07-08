@@ -37,10 +37,6 @@ firstapp.config(['$routeProvider',
             templateUrl: 'views/template.html',
             controller: 'folder'
         }).
-        when('/note/:id', {
-            templateUrl: 'views/template.html',
-            controller: 'note'
-        }).
         when('/share/:id', {
             templateUrl: 'views/template.html',
             controller: 'share'
@@ -48,6 +44,18 @@ firstapp.config(['$routeProvider',
         when('/feeds/:id', {
             templateUrl: 'views/template.html',
             controller: 'feeds'
+        }).
+        when('/note/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'note'
+        }).
+        when('/createnote/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'createnote'
+        }).
+        when('/editnote/:user/:id', {
+            templateUrl: 'views/template.html',
+            controller: 'editnote'
         }).
         otherwise({
             redirectTo: '/home'

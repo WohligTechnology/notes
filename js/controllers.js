@@ -1,10 +1,18 @@
 var phonecatControllers = angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ngDialog']);
 
-phonecatControllers.controller('home', function ($scope, TemplateService, NavigationService) {
+phonecatControllers.controller('home', function ($scope, TemplateService, NavigationService, $routeParams) {
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
+    TemplateService.submenu = "";
+    TemplateService.content = "views/dashboard.html";
     $scope.navigation = NavigationService.getnav();
+    NavigationService.countUsers(function (data, status) {
+        $scope.user = data;
+    });
+    NavigationService.countNotes(function (data, status) {
+        $scope.notes = data;
+    });
 });
 phonecatControllers.controller('user', function ($scope, TemplateService, NavigationService, ngDialog, $location) {
     $scope.template = TemplateService;
@@ -17,20 +25,42 @@ phonecatControllers.controller('user', function ($scope, TemplateService, Naviga
     //DEVELOPMENT
     $scope.user = [];
     $scope.userid = 0;
+    $scope.pagedata = {};
+    $scope.pagedata.page = 1;
+    $scope.pagedata.limit = "20";
+    $scope.pagedata.search = "";
+    $scope.number = 100;
+    $scope.getNumber = function (num) {
+        return new Array(num);
+    }
+
     //    NavigationService.getUser().success(function(data, status) {
     //        console.log(data);
     //        $scope.user = data;
     //    });
 
-    var reload = function () {
-        console.log("in load");
-        NavigationService.getUser(function (data, status) {
+    $scope.reload = function (pagedata) {
+        $scope.pagedata = pagedata;
+        NavigationService.getlimitedUsers(pagedata, function (data, status) {
             console.log(data);
             $scope.user = data;
+            $scope.pages = [];
+            var newclass = "";
+            for (var i = 1; i <= data.totalpages; i++) {
+                if (pagedata.page == i) {
+                    newclass = "active";
+                } else {
+                    newclass = "";
+                }
+                $scope.pages.push({
+                    pageno: i,
+                    class: newclass
+                });
+            }
         });
     }
 
-    reload();
+    $scope.reload($scope.pagedata);
 
 
     //DELETE USER
@@ -64,6 +94,7 @@ phonecatControllers.controller('edituser', function ($scope, TemplateService, Na
     $scope.template = TemplateService;
     $scope.menutitle = NavigationService.makeactive("Update User");
     TemplateService.title = $scope.menutitle;
+    TemplateService.submenu = "views/submenu.html";
     TemplateService.list = true;
     TemplateService.content = "views/edituser.html";
     $scope.navigation = NavigationService.getnav();
@@ -76,7 +107,23 @@ phonecatControllers.controller('edituser', function ($scope, TemplateService, Na
 
     //get one user
     NavigationService.getOneUser($routeParams.id, function (data, status) {
+        console.log(data);
         $scope.user = data;
+        $scope.notecount = 0;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
     });
 
     //DELETE USER
@@ -93,17 +140,6 @@ phonecatControllers.controller('edituser', function ($scope, TemplateService, Na
         NavigationService.updateUser($scope.user, function (data, status) {
             console.log(data);
             $location.url("/user");
-        });
-    }
-
-    //OPENDELETE DIALOG BOX
-    $scope.deletefun = function (id) {
-        $.jStorage.set("deleteuser", id);
-        ngDialog.open({
-            template: 'http://localhost/notes/views/delete.html',
-            closeByEscape: false,
-            controller: 'user',
-            closeByDocument: false
         });
     }
 });
@@ -143,7 +179,7 @@ phonecatControllers.controller('createuser', function ($scope, TemplateService, 
                 $location.url("/user");
             });
         } else {
-            console.log("kgfhsdv");
+            console.log("not valid");
         }
     }
 
@@ -161,6 +197,27 @@ phonecatControllers.controller('device', function ($scope, TemplateService, Navi
     $scope.createdev = [];
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
+
+    //get one user
+    NavigationService.getOneUser($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.user = data;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        $scope.notecount = 0;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
+    });
 
     //GET ALL DEVICE
     var allDevice = function () {
@@ -216,6 +273,26 @@ phonecatControllers.controller('folder', function ($scope, TemplateService, Navi
     $scope.createdev.user = $routeParams.id;
     console.log($routeParams.id);
 
+    //get one user
+    NavigationService.getOneUser($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.user = data;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        $scope.notecount = 0;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
+    });
     //GET ALL Folder
     var allFolder = function () {
         NavigationService.getFolder($routeParams.id, function (data, status) {
@@ -270,6 +347,26 @@ phonecatControllers.controller('feeds', function ($scope, TemplateService, Navig
     $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
 
+    //get one user
+    NavigationService.getOneUser($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.user = data;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        $scope.notecount = 0;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
+    });
     //GET ALL Feeds
     var allFeeds = function () {
         NavigationService.getFeeds($routeParams.id, function (data, status) {
@@ -324,6 +421,27 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
     //    $scope.usr = $routeParams.id;
     $scope.createdev.user = $routeParams.id;
 
+    //get one user
+    NavigationService.getOneUser($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.user = data;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        $scope.notecount = 0;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
+    });
+
     //user drop down
     NavigationService.getUser(function (data, status) {
         $scope.user = data;
@@ -376,18 +494,217 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
     }
 
 });
-phonecatControllers.controller('note', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams) {
+phonecatControllers.controller('note', function ($scope, TemplateService, NavigationService, ngDialog, $location, $routeParams) {
     $scope.template = TemplateService;
-    $scope.menutitle = NavigationService.makeactive("Create Note");
+    $scope.menutitle = NavigationService.makeactive("Note");
     TemplateService.title = $scope.menutitle;
     TemplateService.list = true;
     TemplateService.content = "views/note.html";
     $scope.navigation = NavigationService.getnav();
 
     //DEVELOPMENT
-    $scope.device = [];
-    $scope.createdev = [];
+    $scope.note = [];
+    $scope.noteid = 0;
+    $scope.pagedata = {};
+    $scope.pagedata.page = 1;
+    $scope.pagedata.limit = "20";
+    $scope.pagedata.search = "";
+    $scope.pagedata.user = $routeParams.id;
+    $scope.number = 100;
     $scope.usr = $routeParams.id;
+    console.log($scope.pagedata);
+    $scope.getNumber = function (num) {
+        return new Array(num);
+    }
+
+
+    //get one user
+    NavigationService.getOneUser($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.user = data;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        $scope.notecount = 0;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
+    });
+
+    $scope.reload = function (pagedata) {
+        $scope.pagedata = pagedata;
+        console.log(pagedata);
+        NavigationService.getlimitedNotes(pagedata, function (data, status) {
+            console.log(data);
+            $scope.note = data;
+            $scope.pages = [];
+            var newclass = "";
+            for (var i = 1; i <= data.totalpages; i++) {
+                if (pagedata.page == i) {
+                    newclass = "active";
+                } else {
+                    newclass = "";
+                }
+                $scope.pages.push({
+                    pageno: i,
+                    class: newclass
+                });
+            }
+        });
+    }
+
+    $scope.reload($scope.pagedata);
+
+    //DELETE Note
+    $scope.confDelete = function () {
+        NavigationService.deleteNote(function (data, status) {
+            console.log(data);
+            ngDialog.close();
+            window.location.reload();
+
+        });
+    }
+    $scope.deletefun = function (id, user) {
+        $.jStorage.set("deleteuser", user);
+        $.jStorage.set("deletenote", id);
+        ngDialog.open({
+            template: 'http://localhost/notes/views/deletenote.html',
+            closeByEscape: false,
+            controller: 'note',
+            closeByDocument: false
+        });
+    }
+});
+phonecatControllers.controller('editnote', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams, $location) {
+    $scope.template = TemplateService;
+    $scope.menutitle = NavigationService.makeactive("Update Note");
+    TemplateService.title = $scope.menutitle;
+    TemplateService.list = true;
+    TemplateService.content = "views/editnote.html";
+    $scope.navigation = NavigationService.getnav();
+    $scope.note = $routeParams.id;
+    $scope.usr = $routeParams.user;
+
+
+    //get one user
+    NavigationService.getOneUser($routeParams.user, function (data, status) {
+        console.log(data);
+        $scope.user = data;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        $scope.notecount = 0;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
+    });
+
+
+    NavigationService.getOneNote($scope.note, $scope.usr, function (data, status) {
+        console.log(data);
+        $scope.Note = data;
+    });
+
+    NavigationService.getFolder($routeParams.user, function (data, status) {
+        $scope.folder = data;
+    });
+
+    $scope.addupdateTag = function (Note) {
+        if (!Note.tags) {
+            Noteote.tags = [{
+                "value": ""
+        }];
+        } else {
+            Note.tags.push({
+                "value": ""
+            });
+        }
+    };
+    $scope.removeupdateTag = function (i, Note) {
+        Note.tags.splice(i, 1);
+    };
+
+    $scope.addupdateNoteElem = function (Note) {
+        if (!Note.noteelements) {
+            Note.noteelements = [{
+                "type": "",
+                "details": "",
+                "order": ""
+        }];
+        } else {
+            Note.noteelements.push({
+                "type": "",
+                "details": "",
+                "order": ""
+            });
+        }
+    };
+    $scope.removeupdateNoteElem = function (i, Note) {
+        Note.noteelements.splice(i, 1);
+    };
+    $scope.updatenote = function (Note) {
+        Note.user = $scope.usr;
+        Note._id = $scope.note;
+        console.log(Note);
+        NavigationService.editNote(Note, function (data, status) {
+            console.log(data);
+            $location.url("/note/" + $scope.usr);
+        });
+    }
+
+});
+phonecatControllers.controller('createnote', function ($scope, TemplateService, NavigationService, ngDialog, $routeParams, $location) {
+    $scope.template = TemplateService;
+    $scope.menutitle = NavigationService.makeactive("Create Note");
+    TemplateService.title = $scope.menutitle;
+    TemplateService.list = true;
+    TemplateService.content = "views/createnote.html";
+    $scope.navigation = NavigationService.getnav();
+    $scope.usr = $routeParams.id;
+
+    //get one user
+    NavigationService.getOneUser($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.user = data;
+        $scope.devicecount = data.device.length;
+        $scope.foldercount = 0;
+        $scope.feedcount = data.feed.length;
+        $scope.sharecount = data.share.length;
+        $scope.notecount = 0;
+        for (var i = 0; i < data.note.length; i++) {
+            if (data.note[i].title) {
+                $scope.notecount++;
+            }
+        }
+        for (var i = 0; i < data.folder.length; i++) {
+            if (data.folder[i].name) {
+                $scope.foldercount++;
+            }
+        }
+    });
+
+    NavigationService.getFolder($routeParams.id, function (data, status) {
+        console.log(data);
+        $scope.folder = data;
+    });
+
+    $scope.createdev = [];
     $scope.createdev.user = $routeParams.id;
 
     //create tag
@@ -406,77 +723,14 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.removecreateTag = function (i, dev) {
         dev.splice(i, 1);
     };
-    //
 
-    //update tag
-    $scope.addupdateTag = function (dev) {
-        if (!dev.note.tags) {
-            dev.note.tags = [{
-                "value": ""
-        }];
-        } else {
-            dev.note.tags.push({
-                "value": ""
-            });
-        }
-    };
-    $scope.removeupdateTag = function (i, dev) {
-        dev.note.tags.splice(i, 1);
-    };
-
-    //GET ALL DEVICE
-    NavigationService.getFolder($routeParams.id, function (data, status) {
-        console.log(data);
-        $scope.folder = data;
-    });
-
-    var allNote = function () {
-        NavigationService.getNote($routeParams.id, function (data, status) {
-            $scope.Note = data;
-            console.log(data);
-        });
-    }
-
-    allNote();
-
-    //save user
-    $scope.createnote = function (createdev) {
-        createdev.user = $routeParams.id;
-        NavigationService.saveNote($scope.createdev, function (data, status) {
-            console.log(data);
-            $scope.createdev = [];
-            $scope.tagcreateData = [];
-            allNote();
-        });
-    }
-
-    //update device
-    $scope.updatenote = function (dev) {
-        dev.user = $routeParams.id;
-        console.log(dev);
-        NavigationService.editNote(dev, function (data, status) {
-            console.log(data);
-        });
-    }
-
-    //delete device
-    $scope.deletenote = function (dev) {
-        dev.user = $routeParams.id;
-        NavigationService.deleteNote(dev, function (data, status) {
-            console.log(data);
-            allNote();
-        });
-    }
-
-
-    //create noteelements
     $scope.addcreateNoteElem = function (crdv) {
         if (!crdv.noteelements) {
             crdv.noteelements = [{
                 "type": "",
                 "details": "",
                 "order": ""
-        }];
+                        }];
         } else {
             crdv.noteelements.push({
                 "type": "",
@@ -488,29 +742,15 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     $scope.removecreateNoteElem = function (i, dev) {
         dev.splice(i, 1);
     };
-    //
-
-    //update noteelements
-    $scope.addupdateNoteElem = function (dev) {
-        if (!dev.note.noteelements) {
-            dev.note.noteelements = [{
-                "type": "",
-                "details": "",
-                "order": ""
-        }];
-        } else {
-            dev.note.noteelements.push({
-                "type": "",
-                "details": "",
-                "order": ""
-            });
-        }
-    };
-    $scope.removeupdateNoteElem = function (i, dev) {
-        dev.note.tags.splice(i, 1);
-    };
+    $scope.createnote = function (createdev) {
+        createdev.user = $routeParams.id;
+        NavigationService.saveNote($scope.createdev, function (data, status) {
+            console.log(data);
+            $scope.createdev = [];
+            $location.url("/note/" + $scope.usr);
+        });
+    }
 });
-
 phonecatControllers.controller('headerctrl', ['$scope', 'TemplateService',
     function ($scope, TemplateService) {
         $scope.template = TemplateService;

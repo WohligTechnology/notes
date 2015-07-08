@@ -10,8 +10,17 @@
                     </div>
                     <div class="panel-body">
                         <div class="bot search-box">
-                            <input type="search" name="search" ng-model="search" placeholder="Search" />
+                            <input type="search" name="search" ng-model="pagedata.search" placeholder="Search" ng-change="reload(pagedata);" />
                             <a href="#/createuser" class="right btn btn-primary all-btn create-btn">Create User</a>
+                            <div class="pull-right">
+                                
+                                <select ng-model="pagedata.limit" class="form-control" ng-change="reload(pagedata)">
+    
+                                    <option value="20" selected>20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="msg">{{usermessage}}</div>
                         <div>
@@ -25,7 +34,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="value in user|filter:search">
+                                    <tr ng-repeat="value in user.data">
                                         <td class="text-center">{{value.username}}</td>
                                         <td class="text-center">{{value.email}}</td>
                                         <td class="text-center">{{value.fbid}}</td>
@@ -39,6 +48,13 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <nav>
+                                <ul class="pagination">
+
+                                    <li ng-class="page.class" ng-repeat="page in pages"><a ng-click="reload({page:page.pageno,limit:pagedata.limit,search:pagedata.search});">{{page.pageno}}</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                 </section>
                 </div>

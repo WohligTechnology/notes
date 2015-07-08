@@ -1,0 +1,112 @@
+<div class="page">
+    <h2 class="title">
+</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>User note
+
+                </div>
+
+                <div class="panel-body">
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" ng-model="Note.title" placeholder="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Color</label>
+                            <input type="text" class="form-control" ng-model="Note.color" placeholder="Color" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Folder</label>
+                            <select class="form-control" ng-model="Note.folder" ng-options="usr.folder._id as usr.folder.name for usr in folder">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Reminder Time</label>
+                            <input type="text" class="form-control" ng-model="Note.remindertime" placeholder="Reminder Time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">TimeBomb</label>
+                            <input type="text" class="form-control" ng-model="Note.timebomb" placeholder="Time Bomb" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <div class="panel-body">
+                                <a ng-click="addupdateTag(Note);" class="btn btn-success">Add Tag</a>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>Tags</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="tag in Note.tags">
+                                            <td>
+                                                <input type="text" ng-model="tag.value" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input class="bt btn-danger" type="button" ng-click="removeupdateTag(Note.tags.indexOf(tag), Note);" value="Delete Tag">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Note Elements</label>
+                            <div class="panel-body">
+                                <a ng-click="addupdateNoteElem(Note);" class="btn btn-success">Add Element</a>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>Type</td>
+                                            <td>Details</td>
+                                            <td>Order</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="noteElem in Note.noteelements">
+                                            <td>
+                                                <select ng-model="noteElem.type" class="form-control">
+                                                    <option value="text">Text</option>
+                                                    <option value="image">Image</option>
+                                                    <option value="audio">Audio</option>
+                                                    <option value="checklist">CheckList</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="noteElem.details" placeholder="Details">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="noteElem.order" placeholder="Order">
+                                            </td>
+                                            <td>
+                                                <input class="bt btn-danger" type="button" ng-click="removeupdateNoteElem(Note.noteelements.indexOf(noteElem),Note);" value="Delete Element">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="text-center" style="padding-bottom:20px;">
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="updatenote(Note)">Update</button>
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="deletenote(Note)">Delete</button>
+                            <hr>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-body" ng-if="note==''">
+                    <div class="text-center" style="padding-bottom:20px;">
+                        No note...
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,13 @@
- 
-   <section class="panel panel-default" style="border-radius:0px">
+<section class="panel panel-default" style="border-radius:0px">
     <div class="panel-heading panel-hdr">Users Subnavigation</div>
 
     <div class="panel-body">
         <div class="">
-            <a href="#/device/{{usr}}" class="btn btn-default btn-block">Device</a>
-            <a href="#/folder/{{usr}}" class="btn btn-default btn-block">Folder</a>
-            <a href="#/share/{{usr}}" class="btn btn-default btn-block">Share</a>
-            <a href="#/feeds/{{usr}}" class="btn btn-default btn-block">Feeds</a>
-            <a href="#/note/{{usr}}" class="btn btn-default btn-block">Note</a>
+            <a href="#/device/{{usr}}" class="btn btn-default btn-block">Device<span class="badge">{{devicecount}}</span></a>
+            <a href="#/folder/{{usr}}" class="btn btn-default btn-block">Folder<span class="badge">{{foldercount}}</span></a>
+            <a href="#/share/{{usr}}" class="btn btn-default btn-block">Share<span class="badge">{{sharecount}}</span></a>
+            <a href="#/feeds/{{usr}}" class="btn btn-default btn-block">Feeds<span class="badge">{{feedcount}}</span></a>
+            <a href="#/note/{{usr}}" class="btn btn-default btn-block">Note<span class="badge">{{notecount}}</span></a>
         </div>
     </div>
 

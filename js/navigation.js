@@ -1,4 +1,4 @@
-var adminurl = "http://130.211.118.86/";
+var adminurl = "http://localhost:1337/";
 var navigationservice = angular.module('navigationservice', [])
 
 .factory('NavigationService', function ($http) {
@@ -30,6 +30,31 @@ var navigationservice = angular.module('navigationservice', [])
         },
         getUser: function (callback) {
             $http.post(adminurl + "user/find").success(callback);
+        },
+        getlimitedUsers: function (data, callback) {
+            console.log(data);
+            $http({
+                url: adminurl + "user/findlimited",
+                method: "POST",
+                data: {
+                    "search": data.search,
+                    "pagesize": parseInt(data.limit),
+                    "pagenumber": parseInt(data.page)
+                }
+            }).success(callback);
+        },
+        getlimitedNotes: function (data, callback) {
+            console.log(data);
+            $http({
+                url: adminurl + "note/findlimited",
+                method: "POST",
+                data: {
+                    "user": data.user,
+                    "search": data.search,
+                    "pagesize": parseInt(data.limit),
+                    "pagenumber": parseInt(data.page)
+                }
+            }).success(callback);
         },
         getFolder: function (callback) {
             $http.post(adminurl + "folder/find").success(callback);
@@ -90,12 +115,28 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback);
         },
+        countUsers: function (callback) {
+            $http.post(adminurl + "user/countusers").success(callback);
+        },
+        countNotes: function (callback) {
+            $http.post(adminurl + "user/countnotes").success(callback);
+        },
         getOneUser: function (id, callback) {
             $http({
                 url: adminurl + "user/findone",
                 method: "POST",
                 data: {
                     "_id": id
+                }
+            }).success(callback);
+        },
+        getOneNote: function (id, user, callback) {
+            $http({
+                url: adminurl + "note/findone",
+                method: "POST",
+                data: {
+                    "_id": id,
+                    "user": user
                 }
             }).success(callback);
         },
@@ -265,24 +306,24 @@ var navigationservice = angular.module('navigationservice', [])
                 method: "POST",
                 data: {
                     "user": data.user,
-                    "_id": data.note._id,
-                    "title": data.note.title,
-                    "tags": data.note.tags,
-                    "noteelements": data.note.noteelements,
-                    "color": data.note.color,
-                    "folder": data.note.folder,
-                    "remindertime": data.note.remindertime,
-                    "timebomb": data.note.timebomb
+                    "_id": data._id,
+                    "title": data.title,
+                    "tags": data.tags,
+                    "noteelements": data.noteelements,
+                    "color": data.color,
+                    "folder": data.folder,
+                    "remindertime": data.remindertime,
+                    "timebomb": data.timebomb
                 }
             }).success(callback);
         },
-        deleteNote: function (data, callback) {
+        deleteNote: function (callback) {
             $http({
                 url: adminurl + "note/delete",
                 method: "POST",
                 data: {
-                    "_id": data.note._id,
-                    "user": data.user
+                    "_id": $.jStorage.get("deletenote"),
+                    "user": $.jStorage.get("deleteuser")
                 }
             }).success(callback);
         },
@@ -313,6 +354,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "_id": data.id,
                     "username": data.username,
                     "firstname": data.firstname,
+                    "password": data.password,
                     "lastname": data.lastname,
                     "email": data.email,
                     "fbid": data.fbid,
