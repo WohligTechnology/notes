@@ -122,6 +122,7 @@ ul.socialicons li i:hover {
     /* font-size: 12px; */
     
     color: #444;
+    margin-top: 10px;
 }
 
 .template.footermenu {
@@ -317,4 +318,27 @@ body {
     text-align: center;
     font-weight: 500;
     text-align: center;
+}
+
+.panel-default {
+    border-color: #FF5A60;
+}
+
+.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+    color: #444;
+}
+
+.table-bordered>thead>tr>th,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>tbody>tr>td,
+.table-bordered>tfoot>tr>td {
+    border: 1px solid #FF5A60;
+}
+
+.table-bordered {
+    border: 1px solid #FF5A60;
 }
