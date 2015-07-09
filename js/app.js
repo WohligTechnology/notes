@@ -25,10 +25,7 @@ firstapp.config(['$routeProvider',
             templateUrl: 'views/template.html',
             controller: 'createuser'
         }).
-        when('/contact', {
-            templateUrl: 'views/template.html',
-            controller: 'contact'
-        }).
+       
         when('/device/:id', {
             templateUrl: 'views/template.html',
             controller: 'device'
