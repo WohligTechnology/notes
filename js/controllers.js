@@ -9,16 +9,14 @@ phonecatControllers.controller('home', function ($scope, TemplateService, Naviga
     TemplateService.list = false;
     $scope.navigation = NavigationService.getnav();
     NavigationService.countUsers(function (data, status) {
-        if(data.value==false)
-        {
-            data=0;
+        if (data.value == false) {
+            data = 0;
         }
         $scope.user = data;
     });
     NavigationService.countNotes(function (data, status) {
-        if(data.value==false)
-        {
-            data=0;
+        if (data.value == false) {
+            data = 0;
         }
         $scope.notes = data;
     });
@@ -118,21 +116,11 @@ phonecatControllers.controller('edituser', function ($scope, TemplateService, Na
     NavigationService.getOneUser($routeParams.id, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.notecount = 0;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
 
     //DELETE USER
@@ -211,21 +199,11 @@ phonecatControllers.controller('device', function ($scope, TemplateService, Navi
     NavigationService.getOneUser($routeParams.id, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        $scope.notecount = 0;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
 
     //GET ALL DEVICE
@@ -286,21 +264,11 @@ phonecatControllers.controller('folder', function ($scope, TemplateService, Navi
     NavigationService.getOneUser($routeParams.id, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        $scope.notecount = 0;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
     //GET ALL Folder
     var allFolder = function () {
@@ -360,21 +328,11 @@ phonecatControllers.controller('feeds', function ($scope, TemplateService, Navig
     NavigationService.getOneUser($routeParams.id, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        $scope.notecount = 0;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
     //GET ALL Feeds
     var allFeeds = function () {
@@ -434,21 +392,11 @@ phonecatControllers.controller('share', function ($scope, TemplateService, Navig
     NavigationService.getOneUser($routeParams.id, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        $scope.notecount = 0;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
 
     //user drop down
@@ -531,21 +479,11 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
     NavigationService.getOneUser($routeParams.id, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        $scope.notecount = 0;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
 
     $scope.reload = function (pagedata) {
@@ -607,21 +545,11 @@ phonecatControllers.controller('editnote', function ($scope, TemplateService, Na
     NavigationService.getOneUser($routeParams.user, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        $scope.notecount = 0;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
 
 
@@ -691,21 +619,11 @@ phonecatControllers.controller('createnote', function ($scope, TemplateService, 
     NavigationService.getOneUser($routeParams.id, function (data, status) {
         console.log(data);
         $scope.user = data;
-        $scope.devicecount = data.device.length;
-        $scope.foldercount = 0;
-        $scope.feedcount = data.feed.length;
-        $scope.sharecount = data.share.length;
-        $scope.notecount = 0;
-        for (var i = 0; i < data.note.length; i++) {
-            if (data.note[i].title) {
-                $scope.notecount++;
-            }
-        }
-        for (var i = 0; i < data.folder.length; i++) {
-            if (data.folder[i].name) {
-                $scope.foldercount++;
-            }
-        }
+        $scope.devicecount = data.device;
+        $scope.foldercount = data.folder;
+        $scope.feedcount = data.feed;
+        $scope.sharecount = data.share;
+        $scope.notecount = data.note;
     });
 
     NavigationService.getFolder($routeParams.id, function (data, status) {
