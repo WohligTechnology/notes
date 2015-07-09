@@ -300,7 +300,7 @@ body {
     font-size: 41px;
     color: white;
     text-align: center;
-    padding: 51px 0;
+    padding: 40px 0;
 }
 
 .box .text {
@@ -308,7 +308,7 @@ body {
 }
 
 .box h3 {
-    font-size: 70px;
+    font-size: 50px;
     font-weight: 100;
     text-align: center;
 }
