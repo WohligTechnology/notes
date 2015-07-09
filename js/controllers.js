@@ -6,6 +6,7 @@ phonecatControllers.controller('home', function ($scope, TemplateService, Naviga
     TemplateService.title = $scope.menutitle;
     TemplateService.submenu = "";
     TemplateService.content = "views/dashboard.html";
+    TemplateService.list = false;
     $scope.navigation = NavigationService.getnav();
     NavigationService.countUsers(function (data, status) {
         if(data.value==false)
@@ -91,7 +92,7 @@ phonecatControllers.controller('user', function ($scope, TemplateService, Naviga
     $scope.deletefun = function (id) {
         $.jStorage.set("deleteuser", id);
         ngDialog.open({
-            template: 'http://localhost/notes/views/delete.html',
+            template: 'views/delete.html',
             closeByEscape: false,
             controller: 'user',
             closeByDocument: false
@@ -584,7 +585,7 @@ phonecatControllers.controller('note', function ($scope, TemplateService, Naviga
         $.jStorage.set("deleteuser", user);
         $.jStorage.set("deletenote", id);
         ngDialog.open({
-            template: 'http://localhost/notes/views/deletenote.html',
+            template: 'views/deletenote.html',
             closeByEscape: false,
             controller: 'note',
             closeByDocument: false
