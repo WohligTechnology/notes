@@ -8,9 +8,17 @@ phonecatControllers.controller('home', function ($scope, TemplateService, Naviga
     TemplateService.content = "views/dashboard.html";
     $scope.navigation = NavigationService.getnav();
     NavigationService.countUsers(function (data, status) {
+        if(data.value==false)
+        {
+            data=0;
+        }
         $scope.user = data;
     });
     NavigationService.countNotes(function (data, status) {
+        if(data.value==false)
+        {
+            data=0;
+        }
         $scope.notes = data;
     });
 });
