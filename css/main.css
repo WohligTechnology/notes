@@ -156,8 +156,7 @@ ul.socialicons li i:hover {
 
 .templatemain.header {
     background-color: #FFFFFF;
-    border-bottom: 3px           
-    solid #ff5a60;
+    border-bottom: 3px solid #ff5a60;
 }
 
 .templatemain.maincontent {
@@ -209,7 +208,7 @@ a.logo:hover {
 
 .templatemain.footer {
     background-color: #ff5a60;
-/*    border-top: 3px solid #fff;*/
+    /*    border-top: 3px solid #fff;*/
 }
 
 body {
@@ -219,72 +218,65 @@ body {
     color: rgb(141, 141, 141);
     background-color: #fff;
 }
-.create-btn{
+
+.create-btn {
     padding: 2px 12px;
-  margin-bottom: 3px;
+    margin-bottom: 3px;
 }
-.mr5{
+
+.mr5 {
     margin-right: 5px;
 }
+
 .logout {
     padding: 9px 32px;
     font-weight: 300;
-<<<<<<< HEAD
-    border: 1px 
-    
-    
-    
-    
-    
-    solid #ff5a60;
+    border: 1px solid #ff5a60;
     background-color: #fff;
-=======
-    border: none;
-    background-color: #FF5A60;
->>>>>>> origin/master
     border-radius: 0px;
     color: #ff5a60;
     margin-top: 10px;
-<<<<<<< HEAD
     -webkit-transition: all 1s;
 }
-.logout:hover{
+
+.logout:hover {
     color: white;
     background-color: #ff5a60;
     border-color: #fff;
-=======
 }
-.logout:hover{
-    color: #FF5A60;
-  background-color: white;
->>>>>>> origin/master
-}
-.all-btn{
-     background-color: #FF5A60;
+
+.all-btn {
+    background-color: #FF5A60;
     border-radius: 0;
     border: 1px solid #FF5A60;
 }
-.all-btn:hover{
+
+.all-btn:hover {
     color: #FF5A60;
-  background-color: white;
-    border:1px solid #FF5A60;
+    background-color: white;
+    border: 1px solid #FF5A60;
 }
-.all-btn:active,.all-btn:focus{
+
+.all-btn:active,
+.all-btn:focus {
     background-color: #FF5A60;
     border-color: #FF5A60;
-    color:#fff;
-    border:1px solid #FF5A60;
+    color: #fff;
+    border: 1px solid #FF5A60;
     outline: none;
 }
-.panel-default>.panel-hdr{
+
+.panel-default>.panel-hdr {
     color: #fff;
-  background-color: #FF5A60;
-  border-color: #FF5A60;
+    background-color: #FF5A60;
+    border-color: #FF5A60;
 }
-.search-box input[type=search]{
-      padding: 2px 5px;
-  border: 1px solid #FF5A60;
+
+.search-box input[type=search] {
+    padding: 2px 5px;
+    border: 1px solid #FF5A60;
 }
-.search-box input[type=search]:focus{
+
+.search-box input[type=search]:focus {
     outline: none;
 }
