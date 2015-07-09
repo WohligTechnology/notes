@@ -229,6 +229,7 @@ body {
 .logout {
     padding: 9px 32px;
     font-weight: 300;
+<<<<<<< HEAD
     border: 1px 
     
     
@@ -237,15 +238,26 @@ body {
     
     solid #ff5a60;
     background-color: #fff;
+=======
+    border: none;
+    background-color: #FF5A60;
+>>>>>>> origin/master
     border-radius: 0px;
     color: #ff5a60;
     margin-top: 10px;
+<<<<<<< HEAD
     -webkit-transition: all 1s;
 }
 .logout:hover{
     color: white;
     background-color: #ff5a60;
     border-color: #fff;
+=======
+}
+.logout:hover{
+    color: #FF5A60;
+  background-color: white;
+>>>>>>> origin/master
 }
 .all-btn{
      background-color: #FF5A60;

@@ -1,0 +1,61 @@
+<div class="page">
+    <h2 class="title">
+</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>Create Folder
+
+
+                </div>
+
+                <div class="panel-body">
+
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Folder Name</label>
+                            <input type="text" class="form-control" ng-model="createdev.name" placeholder="Name Of Folder" required>
+                        </div>
+
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createFolder(createdev)">
+                            <button type="submit" class="btn btn-primary all-btn">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                
+            </section>
+
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>User Folder
+                </div>
+
+                <div class="panel-body" ng-repeat="dev in Folder">
+
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Folder Name</label>
+                            <input type="text" class="form-control" ng-model="dev.folder.name" placeholder="Name Of Folder" required>
+                        </div>
+
+                        <div class="text-center" style="padding-bottom:20px;">
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="updateFolder(dev)">Update</button>
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="deleteFolder(dev)">Delete</button>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="panel-body" ng-if="Folder==''">
+                    <div class="text-center" style="padding-bottom:20px;">
+                     No Folder...
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>

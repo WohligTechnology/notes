@@ -1,0 +1,105 @@
+<div class="page">
+    <h2 class="title">
+</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>Create Note
+                </div>
+
+                <div class="panel-body">
+
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" ng-model="createdev.title" placeholder="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Color</label>
+                            <input type="text" class="form-control" ng-model="createdev.color" placeholder="Color" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Folder</label>
+                            <select class="form-control" ng-model="createdev.folder" ng-options="f.folder._id as f.folder.name for f in folder">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Reminder Time</label>
+                            <input type="text" class="form-control" ng-model="createdev.remindertime" placeholder="Reminder Time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">TimeBomb</label>
+                            <input type="text" class="form-control" ng-model="createdev.timebomb" placeholder="Time Bomb" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <div class="panel-body">
+                                <a ng-click="addcreateTag(createdev);" class="btn btn-success">Add Tag</a>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>Tags</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="tag in createdev.tags">
+                                            <td>
+                                                <input type="text" ng-model="tag.value" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input class="bt btn-danger" type="button" ng-click="removecreateTag(createdev.tags.indexOf(tag),createdev.tags);" value="Delete Tag">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Note Elements</label>
+                            <div class="panel-body">
+                                <a ng-click="addcreateNoteElem(createdev);" class="btn btn-success">Add Element</a>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>Type</td>
+                                            <td>Details</td>
+                                            <td>Order</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="noteElem in createdev.noteelements">
+                                            <td>
+                                                <select ng-model="noteElem.type" class="form-control">
+                                                    <option value="text">Text</option>
+                                                    <option value="image">Image</option>
+                                                    <option value="audio">Audio</option>
+                                                    <option value="checklist">CheckList</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="noteElem.details" placeholder="Details">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="noteElem.order" placeholder="Order">
+                                            </td>
+                                            <td>
+                                                <input class="bt btn-danger" type="button" ng-click="removecreateNoteElem(createdev.noteelements.indexOf(noteElem),createdev.noteelements);" value="Delete Element">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createnote(createdev)">
+                            <button type="submit" class="btn btn-primary all-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

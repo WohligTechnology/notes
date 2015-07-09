@@ -1,0 +1,69 @@
+<div class="page">
+    <h2 class="title">
+</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>Create Device
+
+
+                </div>
+
+                <div class="panel-body">
+
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">OS</label>
+                            <input type="text" class="form-control" ng-model="createdev.os" placeholder="OS" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">PushID</label>
+                            <input type="text" class="form-control" ng-model="createdev.pushid" placeholder="Push ID" required>
+                        </div>
+
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createDevice(createdev)">
+                            <button type="submit" class="btn btn-primary all-btn">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+
+
+            </section>
+
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>User Device
+                </div>
+
+                <div class="panel-body" ng-repeat="dev in device">
+
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">OS</label>
+                            <input type="text" class="form-control" ng-model="dev.OS" placeholder="OS" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">PushID</label>
+                            <input type="text" class="form-control" ng-model="dev.pushid" placeholder="Push ID" required>
+                        </div>
+
+                        <div class="text-center" style="padding-bottom:20px;">
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="updateDevice(dev)">Update</button>
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="deleteDevice(dev)">Delete</button>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="panel-body" ng-if="device==''">
+                    <div class="text-center" style="padding-bottom:20px;">
+                        No Device...
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>

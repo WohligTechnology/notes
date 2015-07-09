@@ -1,0 +1,71 @@
+<div class="page">
+    <h2 class="title">
+</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>Create Feeds
+
+
+                </div>
+
+                <div class="panel-body">
+
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" ng-model="createdev.title" placeholder="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Text</label>
+                            <input type="text" class="form-control" ng-model="createdev.text" placeholder="Text" required>
+                        </div>
+
+                        <div class="text-center" style="padding-bottom:20px;" ng-click="createFeeds(createdev)">
+                            <button type="submit" class="btn btn-primary all-btn">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                
+            </section>
+
+            <section class="panel panel-default" style="border-radius:0px;">
+                <div class="panel-heading panel-hdr"><span class="glyphicon glyphicon-th mr5"></span>Feeds
+                    
+
+                </div>
+
+                <div class="panel-body" ng-repeat="dev in Feeds">
+
+                    <!--                    {{user}}-->
+                    <form name="form_constraints" class="form-validation" data-ng-submit="submitForm()">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" ng-model="dev.title" placeholder="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Text</label>
+                            <input type="text" class="form-control" ng-model="dev.text" placeholder="Text" required>
+                        </div>
+
+                        <div class="text-center" style="padding-bottom:20px;">
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="updateFeeds(dev)">Update</button>
+                            <button type="submit" class="btn btn-primary all-btn" ng-click="deleteFeeds(dev)">Delete</button>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="panel-body" ng-if="Feeds==''">
+                    <div class="text-center" style="padding-bottom:20px;">
+                     No Feeds...
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
