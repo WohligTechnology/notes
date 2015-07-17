@@ -564,7 +564,7 @@ phonecatControllers.controller('editnote', function ($scope, TemplateService, Na
 
     $scope.addupdateTag = function (Note) {
         if (!Note.tags) {
-            Noteote.tags = [{
+            Note.tags = [{
                 "value": ""
         }];
         } else {
