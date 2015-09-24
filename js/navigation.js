@@ -1,4 +1,4 @@
-var adminurl = "http://130.211.118.86/";
+var adminurl = "http://104.154.57.170/";
 var navigationservice = angular.module('navigationservice', [])
 
 .factory('NavigationService', function ($http) {
@@ -340,7 +340,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "email": data.email,
                     "password": data.password,
                     "fbid": data.fbid,
-                    "gid": data.gid,
+                    "googleid": data.googleid,
                     "passcode": data.passcode
                 }
             }).success(callback);
@@ -358,7 +358,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "lastname": data.lastname,
                     "email": data.email,
                     "fbid": data.fbid,
-                    "gid": data.gid,
+                    "googleid": data.googleid,
                     "passcode": data.passcode
                 }
             }).success(callback);
