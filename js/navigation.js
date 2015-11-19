@@ -1,4 +1,4 @@
-var adminurl = "http://104.154.57.170/";
+var adminurl = "http://104.197.122.116/";
 var navigationservice = angular.module('navigationservice', [])
 
 .factory('NavigationService', function ($http) {
